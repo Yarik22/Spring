@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "app.host",
+      "type": "java.lang.String",
+      "description": "application default hostname"
+    }
+  ]
+}
