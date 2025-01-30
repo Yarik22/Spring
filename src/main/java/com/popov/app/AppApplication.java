@@ -12,9 +12,6 @@ public class AppApplication {
     @Value("${spring.application.name}")
     private String applicationName;
 
-    @Value("${springdoc.swagger-ui.path}")
-    private String swaggerPath;
-
 	@Value("${app.host}")
     private String host;
 	public static void main(String[] args) {
@@ -28,8 +25,6 @@ public class AppApplication {
         int port = event.getWebServer().getPort();
 		System.out.println("\n----------------------------------------------------------");
         System.out.println("Application '" + applicationName + "' is running at: " + host + ":" + port);
-        System.out.println("Swagger UI available at: " + host + ":" + port + swaggerPath);
-        System.out.println("----------------------------------------------------------");
     }
 
 }

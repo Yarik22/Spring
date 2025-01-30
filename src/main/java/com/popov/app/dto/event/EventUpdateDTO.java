@@ -2,11 +2,22 @@ package com.popov.app.dto.event;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class EventUpdateDTO {
 
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Description is required")
     private String description;
+
+    @NotBlank(message = "Location is required")
     private String location;
+
+    @NotNull(message = "Date is required")
     private LocalDateTime date;
 
     public String getName() {

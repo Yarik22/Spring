@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Event</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Create Event</h1>
+      <form th:action="@{/events/create}" th:object="${event}" method="post">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" th:field="*{name}" />
+          <div
+            th:class="error"
+            th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}"
+          >
+            Name is required
+          </div>
+        </div>
+
+        <div>
+          <label for="description">Description</label>
+          <textarea id="description" th:field="*{description}"></textarea>
+          <div
+            th:class="error"
+            th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}"
+          >
+            Description is required
+          </div>
+        </div>
+
+        <div>
+          <label for="location">Location</label>
+          <input type="text" id="location" th:field="*{location}" />
+          <div
+            th:class="error"
+            th:if="${#fields.hasErrors('location')}"
+            th:errors="*{location}"
+          >
+            Location is required
+          </div>
+        </div>
+
+        <div>
+          <label for="date">Date and Time</label>
+          <input type="datetime-local" id="date" th:field="*{date}" />
+          <div
+            th:class="error"
+            th:if="${#fields.hasErrors('date')}"
+            th:errors="*{date}"
+          >
+            Date and time are required
+          </div>
+        </div>
+
+        <div>
+          <button type="submit">Create</button>
+        </div>
+      </form>
+
+      <p><a href="/events">Back to events list</a></p>
+    </div>
+  </body>
+</html>
