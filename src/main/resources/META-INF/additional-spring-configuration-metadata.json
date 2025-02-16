@@ -1,9 +1,12 @@
-{
-  "properties": [
-    {
-      "name": "app.host",
-      "type": "java.lang.String",
-      "description": "application default hostname"
-    }
-  ]
-}
+{"properties": [
+  {
+    "name": "app.host",
+    "type": "java.lang.String",
+    "description": "application default hostname"
+  },
+  {
+    "name": "api.base-url",
+    "type": "java.lang.String",
+    "description": "A description for 'api.base-url'"
+  }
+]}
