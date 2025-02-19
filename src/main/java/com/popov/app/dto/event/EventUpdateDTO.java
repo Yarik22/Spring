@@ -3,7 +3,6 @@ package com.popov.app.dto.event;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class EventUpdateDTO {
 
@@ -17,7 +16,6 @@ public class EventUpdateDTO {
     @NotBlank(message = "Location is required")
     private String location;
 
-    @NotNull(message = "Date is required")
     private LocalDateTime date;
 
     public String getName() {

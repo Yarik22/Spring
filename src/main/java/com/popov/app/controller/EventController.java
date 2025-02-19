@@ -8,10 +8,17 @@ import com.popov.app.service.EventService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -61,6 +68,7 @@ public class EventController {
         EventResponseDTO eventDto = eventService.getEventById(id)
                 .map(this::convertToEventResponseDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid event ID: " + id));
+                eventDto.setDate(null);
         model.addAttribute("event", eventDto);
         return "event/edit";
     }
@@ -106,5 +114,38 @@ public class EventController {
         dto.setLocation(event.getLocation());
         dto.setDate(event.getDate());
         return dto;
+    }
+}
+
+@Aspect
+@Component
+class LoggingAspect {
+    @AfterReturning(pointcut = "execution(* com.popov.app.controller.EventController.*(..))", returning = "result")
+    public void logMethodArguments(JoinPoint joinPoint, Object result) {
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+
+        System.out.println("Method: " + methodName);
+        System.out.println("Arguments: " + Arrays.toString(args));
+        System.out.println("Returned:" + result);
+    }
+}
+
+@Aspect
+@Component
+class EventAspect {
+
+    @Before("execution(* com.popov.app.controller.EventController.createEvent(..)) && args(eventCreateDTO, ..)")
+    public void setDefaultDateForCreateEvent(JoinPoint joinPoint, EventCreateDTO eventCreateDTO) {
+        if (eventCreateDTO.getDate() == null) {
+            eventCreateDTO.setDate(LocalDateTime.now().plusDays(7));
+        }
+    }
+
+    @Before("execution(* com.popov.app.controller.EventController.updateEvent(..)) && args(id, eventUpdateDTO, ..)")
+    public void setDefaultDateForUpdateEvent(JoinPoint joinPoint, UUID id, EventUpdateDTO eventUpdateDTO) {
+        if (eventUpdateDTO.getDate() == null) {
+            eventUpdateDTO.setDate(LocalDateTime.now().plusDays(7));
+        }
     }
 }

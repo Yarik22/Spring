@@ -50,4 +50,15 @@ public class EventResponseDTO {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "EventResponseDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }
