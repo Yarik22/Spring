@@ -120,7 +120,7 @@ public class EventController {
 @Aspect
 @Component
 class LoggingAspect {
-    @AfterReturning(pointcut = "execution(* com.popov.app.controller.EventController.*(..))", returning = "result")
+    @AfterReturning(pointcut = "execution(* com.popov.app.controller.EventController.createEvent(..))", returning = "result")
     public void logMethodArguments(JoinPoint joinPoint, Object result) {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();

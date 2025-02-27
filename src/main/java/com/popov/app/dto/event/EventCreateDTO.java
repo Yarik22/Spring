@@ -48,4 +48,13 @@ public class EventCreateDTO {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+    @Override
+    public String toString() {
+        return "EventResponseDTO{" +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }
