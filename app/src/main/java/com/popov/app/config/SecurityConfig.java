@@ -20,27 +20,28 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/login").permitAll()
-                .requestMatchers("/events/create", "/events/edit/**", "/events/delete/**").authenticated()
-                .anyRequest().permitAll()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/events")
-                .failureUrl("/login?error=true")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login")
-                .permitAll()
-            )
-            .userDetailsService(userDetailsService);
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable()) // ✅ Disable CSRF protection
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/register", "/login").permitAll()
+            .requestMatchers("/events/create", "/events/edit/**", "/events/delete/**").authenticated()
+            .anyRequest().permitAll()
+        )
+        .formLogin(form -> form
+            .loginPage("/login")
+            .defaultSuccessUrl("/events", true) // ✅ Force redirect after login
+            .failureUrl("/login?error=true")
+            .permitAll()
+        )
+        .logout(logout -> logout
+            .logoutSuccessUrl("/login")
+            .permitAll()
+        )
+        .userDetailsService(userDetailsService);
 
-        return http.build();
-    }
+    return http.build();
+}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
