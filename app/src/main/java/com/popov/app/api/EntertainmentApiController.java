@@ -1,4 +1,4 @@
-package com.popov.app.controller;
+package com.popov.app.api;
 
 import com.popov.app.model.Entertainment;
 import com.popov.app.service.EntertainmentService;
@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/entertainments")
-public class EntertainmentController {
+public class EntertainmentApiController {
 
     private final EntertainmentService entertainmentService;
 
-    public EntertainmentController(EntertainmentService entertainmentService) {
+    public EntertainmentApiController(EntertainmentService entertainmentService) {
         this.entertainmentService = entertainmentService;
     }
 
