@@ -32,7 +32,7 @@ public class AuthController {
                         return ResponseEntity.status(400).body("Registration failed");
                     }
                 })
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body("Error occurred during registration")));
+                .onErrorResume(_ -> Mono.just(ResponseEntity.status(500).body("Error occurred during registration")));
     }
     @PostMapping("/login")
     public Mono<ResponseEntity<String>> loginUser(@RequestBody User user) {
@@ -51,7 +51,7 @@ public class AuthController {
                     }
                     return ResponseEntity.status(400).body("Login failed");
                 })
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body("Error occurred during login")));
+                .onErrorResume(_ -> Mono.just(ResponseEntity.status(500).body("Error occurred during login")));
     }
 
     @PostMapping("/logout")
@@ -61,7 +61,7 @@ public class AuthController {
                 .header(HttpHeaders.COOKIE, sessionId) // Send JSESSIONID in the cookies
                 .retrieve()
                 .bodyToMono(String.class)
-                .map(response -> ResponseEntity.ok("Logout successful"))
+                .map(_ -> ResponseEntity.ok("Logout successful"))
                 .onErrorReturn(ResponseEntity.status(400).body("Logout failed"));
     }
     
